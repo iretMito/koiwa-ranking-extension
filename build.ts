@@ -9,5 +9,7 @@ const builder = new Builder({ watchFlag, devFlag, chromeFlag, firefoxFlag });
 builder.addBuildFile('popup/index.tsx');
 builder.addStaticFile('popup/popup.html');
 builder.addStaticDir('icons');
+builder.addBuildFile('contents/Content.ts');
+
 
 builder.build();

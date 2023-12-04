@@ -15,5 +15,11 @@
     },
     "default_title": "default_title",
     "default_popup": "popup/popup.html"
-  }
+  },
+  "content_scripts": [
+    {
+      "js": ["contents/Content.js"],
+      "matches": ["https://cloud-license.com/*"]
+    }
+  ]
 }
