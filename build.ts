@@ -1,15 +1,22 @@
-import { Builder } from './utils/buildUtils';
+/* eslint-disable */
+import {build} from 'esbuild';
+import { glob } from 'glob';
+import fs from 'fs-extra';
 
-const watchFlag = process.argv.includes('--watch');
-const devFlag = process.argv.includes('--dev');
-const chromeFlag = process.argv.includes('--chrome');
-const firefoxFlag = process.argv.includes('--firefox');
+const entryPoints = glob.sync('./src/**/*.{js,ts,tsx}');
+const isProduction = process.env.NODE_ENV === 'production';
 
-const builder = new Builder({ watchFlag, devFlag, chromeFlag, firefoxFlag });
-builder.addBuildFile('popup/index.tsx');
-builder.addStaticFile('popup/popup.html');
-builder.addStaticDir('icons');
-builder.addBuildFile('contents/Content.ts');
-
-
-builder.build();
+build({
+    entryPoints: entryPoints,
+    bundle: true,
+    sourcemap: (!isProduction),
+    outdir: 'dist',
+    target: 'es2020',
+    logLevel: 'info',
+    minify: (!!isProduction),
+}).then(() => {
+    // fs.emptyDir('./dist');  // ここでemptyDirを使う
+    fs.copy('./manifest.json', './dist/manifest.json')
+    fs.copy('./src/popup/popup.html', './dist/popup/popup.html');
+    fs.copy('./src/icons', './dist/icons');
+}).catch(() => process.exit(1))

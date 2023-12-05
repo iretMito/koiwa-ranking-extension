@@ -7,7 +7,7 @@
     "build:firefox": "ts-node -T build.ts --firefox",
     "build:chrome": "ts-node -T build.ts --chrome",
     "run:firefox": "web-ext run -s dist-firefox",
-    "run:chrome": "web-ext run -s dist-chrome -t chromium",
+    "run:chrome": "web-ext run -s dist -t chromium",
     "package:firefox": "web-ext build -s dist-firefox --overwrite-dest",
     "lint": "eslint --max-warnings=0 . && prettier --check .",
     "lint:fix": "eslint --fix . && prettier --write .",
@@ -15,12 +15,17 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "ansi-align": "^3.0.1",
     "esbuild": "^0.15.10",
+    "fs-extra": "^11.2.0",
+    "glob": "^10.3.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "string-width": "3",
     "webextension-polyfill": "^0.10.0"
   },
   "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
     "@types/node": "^18.8.2",
     "@types/react-dom": "^18.0.6",
     "@types/webextension-polyfill": "^0.9.1",
